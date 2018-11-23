@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Load Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Roboto+Slab" rel="stylesheet">
+    <img src="AWLO LOGO big.png" height="100px" width="100px" class="img-fluid" alt="Responsive image">
+    in Partnership with
+    <img src="YALI LOGO.jpg" height="100px" width="100px" class="img-fluid" alt="Responsive image">
 </head>
 <body>
     <div class="container" style="maximum-width:90%;">
@@ -20,33 +23,34 @@
         </div>
         <div class="row justify-content-center">
                 <form action="#" method="post">
-                    <div class="row">
+                  <div class="row">
                         <div class="col-md form-group">
-                            <input type="text" class="form-control" id="firstName" placeholder="Your First Name" required>
+                         <form class="form horizontal" role="form" form action="database.php" method="POST">    
+                            <input type="text"  name="firstName" class="form-control" id="firstName" placeholder="Your First Name" required>
                         </div>
                         <div class="col-md form-group">
-                            <input type="text" class="form-control" id="lastName" placeholder="Your Last Name" required>
+                            <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Your Last Name" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col form-group">
-                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Your Email" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col">
-                            <input type="phoneNumber" class="form-control" id="inputPhone Number" placeholder="Your Phone Number e.g. +2348081836149" required>             
+                            <input type="phoneNumber" name="phoneNumber" class="form-control" id="inputPhone Number" placeholder="Your Phone Number e.g. +2348081836149"  required>             
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <legend class="col-form-label">Gender</legend>
                             <div class="form-check form-check-inline">
-                                <input type="radio" name="gender" id="female" class="form-check-input" value="Female">
+                                <input type="radio" name="gender" id="female" class="form-check-input" value="Female" required>
                                 <label for="female" class="form-check-label">Female</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                    <input type="radio" name="gender" id="male" class="form-check-input" value="Male" required>
+                                    <input type="radio" name="gender" id="male" class="form-check-input" value="Male"  required>
                                     <label for="male" class="form-check-label">Male</label>
                             </div>
                         </div>
@@ -55,22 +59,23 @@
                         <div class="col">
                             <legend class="col-form-label">How did you hear about the walk?</legend>
                             <div class="form-check form-check-inline form-group">
-                                    <input type="radio" name="referrer" id="yali" class="form-check-input" value="YALI" required >
+                                    <input type="radio" name="howDidyouhearaboutthewalk" id="yali" class ="form-check-input" value="YALI" required >
                                     <label for="yali" class="form-check-label">YALI</label>
                             </div>
                             <div class="form-check form-check-inline form-group">
-                                    <input type="radio" name="referrer" id="awlo" class="form-check-input" value="AWLO" required >
+                                    <input type="radio" name="howDidyouhearaboutthewalk" id="awlo" class="form-check-input" value="AWLO" required >
                                     <label for="awlo" class="form-check-label">AWLO</label>
                             </div>
                             <div class="form-check form-check-inline form-group">
-                                    <input type="radio" name="referrer" id="others" class="form-check-input" value="others" required >
+                                    <input type="radio" name="howDidyouhearaboutthewalk" id="others" class="form-check-input" value="Others" required >
                                     <label for="others" class="form-check-label">Others</label>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+  <div class="row">
                         <div class="col">
-                            <p style="text-align:center;"><button type="submit" class="btn btn-danger">Count Me In</button></p>
+                            <p style="text-align:center;"><button type="count me in" onclick="sendData({test:'ok'})">Count Me In</button></p>
+                             
                         </div>
                     </div>
                 </form>
