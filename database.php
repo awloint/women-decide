@@ -1,22 +1,23 @@
 <?php
-$first name = $_POST['first name'];
-$last name = $_POST['last name'];
+//include('dbCon')
+$firstname = $_POST['firstname'];
+$lastname = $_POST['lastname'];
 $email = $_POST['email'];
-$phone number= $_POST['phone number'];
+$phonenumber= $_POST['phonenumber'];
 $gender = $_POST['gender'];
-$how did you hear about the walk = $_POST['how did you hear about the walk'];
+$howdidyouhearaboutthewalk = $_POST['howDidyouhearaboutthewalk'];
 $from = 'Demo Contact Form'; 
 $to = 'example@domain.com'; 
 $subject = 'Thanks for registering ';
-
-$body = "From: $name\n E-Mail: $email\n Message:\n $message";
+$message = "Application successful";
+$body = "From: $firstname\n E-Mail: $email\n Message:\n $message";
 
  // Check if first name has been entered
-if (!$_POST['first name']) {
+if (!$_POST['firstname']) {
 	$errName = 'Please enter your first name';
 }
  // Check if last name has been entered
- if (!$_POST['last name']) {
+ if (!$_POST['lastname']) {
 	$errName = 'Please enter your last name';
 }
 
@@ -25,7 +26,7 @@ if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
     $errEmail = 'Please enter a valid email address';
 }
  // Check if phone number has been entered
- if (!$_POST['phone number']) {
+ if (!$_POST['phonenumber']) {
 	$errName = 'Please enter your valid phone number';
 }
 
@@ -34,60 +35,53 @@ if (!$_POST['gender']) {
 	$errMessage = 'Please enter your gender';
 }
  // Check if how did you hear about the walk has been entered
- if (!$_POST['how did you hear about the walk has been entered']) {
-	$errName = 'Please enter how did you hear about the walk has been entered';
+ if (!$_POST['howDidyouhearaboutthewalk']) {
+	$errName = 'Please let us know how you heard about the walk';
 }
 // If there are no errors, send the email
-if (!$errFirstname && !$errLastname && !$errEmail && !$errPhonenumber && !$errGender && !$errHowdidyouhearaboutthewalk) {
-	if (mail ($to, $subject, $body, $from)) {
-		$result='<div class="alert alert-success">Thank You! I will be in touch</div>';
-	} else {
-		$result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later</div>';
-	}
-}
+// if (!$errFirstname && !$errLastname && !$errEmail && !$errPhonenumber && !$errGender && !$errHowdidyouhearaboutthewalk) {
+// 	if (mail ($to, $subject, $body, $from)) {
+// 		$result='<div class="alert alert-success">Thank You! I will be in touch</div>';
+// 	} else {
+// 		$result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later</div>';
+// 	}
+// }
   $host ="localhost";
   $dbUsername ="root";
   $dbPassword ="";
-  $dbname ="walk database";
+  $dbname ='walkdatabase';
 
-  \\create connection
-  $conn = new mysqli($host, $dbFirstname, $dbLastname, $dbEmail, $dbPhonenumber, $dbGender, $dbHowdidyouhearaboutthewalk);
+  //create connection
+  $conn = mysqli_connect($host, $dbUsername, $dbPassword, $dbname);
+if(!$conn)
+{
+    echo 'failed';
+}
 
   if (mysqli_connect_error()) {
-      .die( 'Connect Error'('. mysqli_connect_error(). ')'. mysqli_conect_error()); 
-} else {
-    $SELECT = "SELECT email" From walk database Where email = ? Limit 1";
-    $SELECT = "SELECT phonenumber" From walk database Where  phonenumber =? Limit 1";
-    $INSERT = INSERT Into walk database (first name, last name, email, phone number,gender, how did you hear about the walk)
-    values(?,?,?,?,?,?)";
-
-    //Prepare statement
-    $stmt = $conn- >prepare($SELECT);
-    $stmt- >bind_param("sssiss", $firtsname, $lastname, $email, $phonenumber, $gender, $how did you hear about the walk);
-    $stmt- >execute();
-    $stmt- >bind_result($firtsname, $lastname, $email, $phonenumber, $gender, $how did you hear about the walk);
-    $stmt- >store_result();
-    $rnum = $stmt- >num_rows;
-
-    if ($rnum==0) {
-        $stmt- >close();
-
-        $stmt = $conn->prepare($INSERT);
-        $stmt- >bind_param("sssiss", $firtsname, $lastname, $email, $phonenumber, $gender, $how did you hear about the walk);
-        $stmt- >execute();
-        echo "New record inserted sucessfully ";
-    } else {
-        echo "Someone already registered using this email";
-        echo "Someone already registered using this phone number";
-    }
-    $stmt->close();
-    $conn->close();
+     // die( 'Connect Error'('. mysqli_connect_error(). ')'. mysqli_conect_error()'); 
+     echo 'not connected to the server';
 }
-  }else {
-      echo "All field are required";
-    die();
+else if(!mysqli_select_db($conn, $dbname))
+{
+ echo 'Database Not Selected';
+}
+ else {
+  //  $SELECT = "SELECT email From walkdatabase Where email = ? Limit 1";
+    //$SELECT = "SELECT phonenumber From walk database Where  phonenumber =? Limit 1";
+    // $INSERT = "INSERT INTO walkdatabase (Firstname, Lastname, Email, Phonenumber, gender,  Howyouheard)
+    // values(?,?,?,?,?,?)";
+    $INSERT = "INSERT INTO users (Firstname, Lastname, Email, Phonenumber, gender,  Howyouheard)
+    VALUES ('$firstname', '$lastname', '$email', '$phonenumber', '$gender', '$howdidyouhearaboutthewalk')";
+
+  if(!mysqli_query($conn, $INSERT))
+  {
+      echo 'Not inserted';
   }
-  
+  else
+  {
+    echo 'inserted';      
   }
-<?php echo $result;
+  header("refresh:2; url=index.html");
+  }
  ?> 
