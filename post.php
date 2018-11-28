@@ -1,8 +1,4 @@
 <?php
-//display errors temporarily
-// ini_set('display_errors', 1);
-
-
 //Pull in the Database Configuration file
 require 'dbconfig.php';
 
@@ -12,7 +8,7 @@ require 'sendpulse-rest-api-php/ApiClient.php';
 require 'sendpulse-rest-api-php/Storage/TokenStorageInterface.php';
 require 'sendpulse-rest-api-php/Storage/FileStorage.php';
 require 'sendpulse-rest-api-php/Storage/SessionStorage.php';
-require 'sendpulse-rest-api-ephp/Storage/MemcachedStorage.php';
+require 'sendpulse-rest-api-php/Storage/MemcachedStorage.php';
 require 'sendpulse-rest-api-php/Storage/MemcacheStorage.php';
 
 // Pull in PHPMailer Classes
@@ -22,6 +18,8 @@ use Sendpulse\RestApi\ApiClient;
 use Sendpulse\RestApi\Storage\FileStorage;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+
+$SPApiClient = new ApiClient(API_USER_ID, API_SECRET, new FileStorage());
 
 
 // Capture Post Data that is sent from the form through the main.js file
@@ -75,12 +73,16 @@ if($usercheckquery->rowCount() > 0) {
         )
     );
 
+    //send success response
+    echo "success";
+
+    // Fetch Result
+    $enteruserquery->rowCount();
     // Check to see if the query executed successfully
     if ($enteruserquery->rowCount() > 0) {
-        // send a success response back to ajax
-        echo "success";
 
         // send an SMS
+        $smstext = "Hi {$firstName}. Thanks for registering for the #WomenDecide Awareness Walk. We look forward to doing this with you. For further enquiries call: 08037594969.";
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => "http://5r4gj.api.infobip.com/sms/2/text/single",
@@ -90,7 +92,7 @@ if($usercheckquery->rowCount() > 0) {
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => "{ \"from\":\"AWLO\", \"to\":\"{$phone}\", \"text\":\"Test SMS.\" }",
+        CURLOPT_POSTFIELDS => "{ \"from\":\"AWLO\", \"to\":\"{$phone}\", \"text\":\"{$smstext}\" }",
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
             "authorization: {$token}",
@@ -103,11 +105,33 @@ if($usercheckquery->rowCount() > 0) {
 
         curl_close($curl);
 
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
-        }
+        // if ($err) {
+        //     echo "cURL Error #:" . $err;
+        // } else {
+        //     echo $response;
+        // }
+
+        /**
+         * Add User to the SendPule mailing List
+         */
+        $bookID = 2125883;
+        $emails = array(
+                array(
+                    'email'         =>  $email,
+                    'variables'     =>  array(
+                    'phone'         =>  $phone,
+                    'name'          =>  $firstName,
+                    'lastName'      =>  $lastName,
+                    'gender'        =>  $gender,
+                    'referrer'      =>  $referrer,
+                )
+            )
+        );
+        // Without Confirmation
+        var_dump($SPApiClient->addEmails($bookID, $emails));
+
+
+
 
     }
 

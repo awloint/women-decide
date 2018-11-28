@@ -52,7 +52,7 @@ $(document).ready(function() {
                     setTimeout(function () {
                         window.location = 'https://awlo.org'
                     }, 3000);
-                } else if(result == 'success') {
+                } else {
                     swal("Sucess!", "You have successfully registered!", "success");
                     setTimeout(function () {
                         window.location = 'https://awlo.org'
