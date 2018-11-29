@@ -50,12 +50,12 @@ $(document).ready(function() {
                 if(result == 'user_exists') {
                     swal("User Already Exists!", "You have already registered!", "error");
                     setTimeout(function () {
-                        window.location = 'https://awlo.org'
+                        window.location = '../thankyou.html'
                     }, 3000);
                 } else {
                     swal("Sucess!", "You have successfully registered!", "success");
                     setTimeout(function () {
-                        window.location = 'https://awlo.org'
+                        window.location = '../thankyou.html'
                     }, 3000);
                 }
             }

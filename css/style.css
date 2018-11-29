@@ -17,3 +17,11 @@
 #email {
     text-transform: lowercase;
 }
+
+p.red-text {
+    color: red;
+}
+
+p.purple-text {
+    color: purple;
+}
